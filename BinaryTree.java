@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 class Node{
     int data;
@@ -95,10 +96,25 @@ public class BinaryTree {
                 return root;
             }
             else{
-                q.add(curr.left);
+                q.add(curr.right);
             }
         }
         return root;
+    }
+    public static void preOrderByItr(Node root){
+        Stack<Node> s = new Stack<>();
+        s.push(root);
+        while(s.isEmpty()!=true){
+            Node cur=s.peek();
+            s.pop();
+            System.out.print(cur.data+" ");
+            if(cur.right!=null){
+                s.add(cur.right);
+            }
+            if(cur.left!=null){
+                s.add(cur.left);
+            }
+        }
     }
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
@@ -118,5 +134,7 @@ public class BinaryTree {
         bt.postOrder(root);
         System.out.println();
         bt.levelOrder(root);
+        System.out.println();
+        bt.preOrderByItr(root);
     }
 }

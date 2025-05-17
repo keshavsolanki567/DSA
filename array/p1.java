@@ -1,4 +1,4 @@
-package Array;
+package array;
 public class p1 {
     //Move all zero to End
     static void swiftingZero(int arr[]){
