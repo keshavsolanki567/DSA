@@ -107,13 +107,27 @@ public class BinaryTree {
         while(s.isEmpty()!=true){
             Node cur=s.peek();
             s.pop();
-            System.out.print(cur.data+" ");
+            System.out.print(cur.data+"  ");
             if(cur.right!=null){
                 s.add(cur.right);
             }
             if(cur.left!=null){
                 s.add(cur.left);
             }
+        }
+    }
+    public static void  inOrderByItr(Node root){
+        Stack<Node> s = new Stack<>();
+        Node curr = root;
+        while(curr!=null||s.isEmpty()!=true){
+            while(curr!=null){
+                s.push(curr);
+                curr=curr.left;
+            }
+            curr=s.peek();
+            s.pop();
+            System.out.println(curr.data+"  ");
+            curr=curr.right;
         }
     }
     public static void main(String[] args) {
