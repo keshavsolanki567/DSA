@@ -5,8 +5,6 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
-import javax.swing.tree.TreeNode;
-
 class Node{
     int data;
     Node left;
@@ -105,6 +103,20 @@ public class BinaryTree {
         }
         return root;
     }
+    public static void  inOrderByItr(Node root){
+        Stack<Node> s = new Stack<>();
+        Node curr = root;
+        while(curr!=null||s.isEmpty()!=true){
+            while(curr!=null){
+                s.push(curr);
+                curr=curr.left;
+            }
+            curr=s.peek();
+            s.pop();
+            System.out.print(curr.data+"  ");
+            curr=curr.right;
+        }
+    }
     public static void preOrderByItr(Node root){
         Stack<Node> s = new Stack<>();
         s.push(root);
@@ -120,20 +132,7 @@ public class BinaryTree {
             }
         }
     }
-    public static void  inOrderByItr(Node root){
-        Stack<Node> s = new Stack<>();
-        Node curr = root;
-        while(curr!=null||s.isEmpty()!=true){
-            while(curr!=null){
-                s.push(curr);
-                curr=curr.left;
-            }
-            curr=s.peek();
-            s.pop();
-            System.out.println(curr.data+"  ");
-            curr=curr.right;
-        }
-    }
+    
     public static void postOrderByItrWith2Stack(Node root) {
         Stack<Node> s1= new Stack<>();
         Stack<Node> s2= new Stack<>();
@@ -155,6 +154,106 @@ public class BinaryTree {
             System.out.print(curr.data+ "  ");
         }  
     }
+    public static void postOrderByItr(Node root){
+        Stack<Node> s = new Stack<>();
+        Node curr = root;
+        while(true){
+            while(curr!=null){
+                s.push(curr);
+                s.push(curr);
+                curr= curr.left;
+            }
+            if(s.isEmpty()==true){
+                return;
+            }
+            curr = s.peek();
+            s.pop();
+            if(s.isEmpty()!=true && s.peek()==curr){
+                curr=curr.right;
+            }
+            else{
+                System.out.print(curr.data+ "  ");
+                curr=null;
+            }
+        }
+    }
+    public static void zigzagLevelOrder(Node root){
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        boolean flag=true; 
+        while (q.isEmpty()!=true) {
+            int s =q.size();
+            int i=0;
+            List<Integer> temp = new ArrayList<>(s);
+            while(s>0){
+                Node curr = q.peek();
+                q.poll();
+                if(flag==true) {
+                    temp.add(curr.data);
+                }
+                else{
+                    temp.add(0, curr.data);
+                }
+                i++;
+                if(curr.left!=null){
+                    q.add(curr.left);
+                }
+                if(curr.right!=null){
+                    q.add(curr.right);
+                }
+                s--;
+               
+            }
+            for(int j=0;j<temp.size();j++) {
+                System.out.print(temp.get(j)+"  ");
+            }
+            flag =!flag;
+        }
+    }
+    public static void leftView(Node root){
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while(!(q.isEmpty())){
+            boolean flag=true;
+            int s =q.size();
+            while(s>0){
+                Node curr= q.peek();
+                q.poll();
+                if(flag==true){
+                    System.out.print(curr.data+"  ");
+                    flag=false;
+                }
+                if(curr.left!=null){
+                    q.add(curr.left);
+                }
+                if(curr.right!=null){
+                    q.add(curr.right);
+                }
+                s--;
+            }
+        }
+    }
+    public static void rightView(Node root){
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while(!(q.isEmpty())){
+            int s =q.size();
+            while(s>0){
+                Node curr= q.peek();
+                q.poll();
+                if(s==1){
+                    System.out.print(curr.data+ "  ");
+                }
+                if(curr.left!=null){
+                    q.add(curr.left);
+                }
+                if(curr.right!=null){
+                    q.add(curr.right);
+                }
+                s--;
+            }
+        }
+    }
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
          //Node root = buildTree();
@@ -166,16 +265,37 @@ public class BinaryTree {
             int d = sc.nextInt();
             root = createTree(root, d);
         }
+        System.out.println("Inorder Traversal: " );
         bt.inOrder(root);
         System.out.println();
+        System.out.println("Preorder Traversal: ");
         bt.preOrder(root);
         System.out.println();
+        System.out.println("Postorder Traversal: ");
         bt.postOrder(root);
         System.out.println();
+        System.out.println("Levelorder Traversal: ");
         bt.levelOrder(root);
         System.out.println();
+        System.out.println("Inorder Traversal By Iterative Approarch: ");
+        bt.inOrderByItr(root);
+        System.out.println();
+        System.out.println("Preorder Traversal By Iterative Approarch: ");
         bt.preOrderByItr(root);
         System.out.println();
+        System.out.println("Postorder Traversal By Iterative Approarch with 2 Stack: ");
         bt.postOrderByItrWith2Stack(root);
+        System.out.println();
+        System.out.println("Postorder Traversal By Iterative Approarch: ");
+        bt.postOrderByItr(root);
+        System.out.println();
+        System.out.println("Zigzag levelorder Traversal: ");
+        bt.zigzagLevelOrder(root);
+        System.out.println();
+        System.out.println("Left View of Binary Tree ");
+        bt.leftView(root);
+        System.out.println();
+        System.out.println("Right View of Binary Tree ");
+        bt.rightView(root);
     }
 }
