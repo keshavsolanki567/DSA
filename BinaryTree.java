@@ -1,7 +1,11 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+
+import javax.swing.tree.TreeNode;
 
 class Node{
     int data;
@@ -130,6 +134,27 @@ public class BinaryTree {
             curr=curr.right;
         }
     }
+    public static void postOrderByItrWith2Stack(Node root) {
+        Stack<Node> s1= new Stack<>();
+        Stack<Node> s2= new Stack<>();
+        s1.push(root);
+        while(s1.isEmpty()!=true){
+            Node curr= s1.peek();
+            s1.pop();
+            s2.push(curr);
+            if(curr.left!=null){
+                s1.push(curr.left);
+            }
+            if(curr.right!=null){
+                s1.push(curr.right);
+            }
+        }
+        while(s2.isEmpty()!=true){
+            Node curr= s2.peek();
+            s2.pop();
+            System.out.print(curr.data+ "  ");
+        }  
+    }
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
          //Node root = buildTree();
@@ -150,5 +175,7 @@ public class BinaryTree {
         bt.levelOrder(root);
         System.out.println();
         bt.preOrderByItr(root);
+        System.out.println();
+        bt.postOrderByItrWith2Stack(root);
     }
 }
