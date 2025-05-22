@@ -254,6 +254,27 @@ public class BinaryTree {
             }
         }
     }
+    public static void printAllLeaf(Node root){
+       Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while(!(q.isEmpty())){
+            int s =q.size();
+            while(s>0){
+                Node curr= q.peek();
+                q.poll();
+                if(curr.left==null && curr.right==null){
+                    System.out.print(curr.data+"  ");
+                }
+                if(curr.left!=null){
+                    q.add(curr.left);
+                }
+                if(curr.right!=null){
+                    q.add(curr.right);
+                }
+                s--;
+            }
+        }
+    }
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
          //Node root = buildTree();
@@ -297,5 +318,8 @@ public class BinaryTree {
         System.out.println();
         System.out.println("Right View of Binary Tree ");
         bt.rightView(root);
+         System.out.println();
+        System.out.println("All Leaf Node ");
+        bt.printAllLeaf(root);
     }
 }

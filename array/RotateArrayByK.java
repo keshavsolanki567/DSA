@@ -13,6 +13,15 @@ public class RotateArrayByK {
             System.out.print(nums[i]+"  ");
         }
     }
+    public static void rotate(int[] nums,int k){
+        while(k>0){
+            int temp = nums[nums.length-1];
+            for(int i=nums.length-1; i>0; i++){
+                nums[i]=nums[i-1];
+            }
+            nums[0]=temp;
+        }
+    }
     public static void reverse(int nums[], int s, int e){
         
         for(int i=s; i<e;i++){
