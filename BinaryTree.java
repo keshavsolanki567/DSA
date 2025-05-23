@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -14,7 +15,10 @@ class Node{
         right=null;
     }
 }
-
+class Pair{
+    Node temp;
+    int line;
+}
 public class BinaryTree {
 
     public static Node buildTree(){
@@ -254,6 +258,40 @@ public class BinaryTree {
             }
         }
     }
+    public static void bottomView(Node root){
+        Queue<Pair> q = new LinkedList<>();
+        HashMap<Integer,Integer> hs = new HashMap<>();
+        Pair p = new Pair();
+        p.temp=root;
+        p.line=0;
+        q.add(p);
+        int mn=0;
+        int mx=0;
+        while(q.isEmpty()!=true){
+            Pair curr =q.peek();
+            q.poll();
+            Node temp = curr.temp;
+            int line = curr.line;
+            hs.put(line, temp.data);
+            if(temp.left!=null){
+                Pair ps = new Pair();
+                ps.temp=temp.left;
+                ps.line=line-1;
+                q.add(ps);
+            }
+             if(temp.right!=null){
+                Pair ps = new Pair();
+                ps.temp=temp.right;
+                ps.line=line+1;
+                q.add(ps);
+            }
+            mn = Math.min(mx, line);
+            mx = Math.max(mx, line);
+        }
+        for(int i=mn;i<=mx;i++){
+            System.out.print(hs.get(i)+ " ");
+        }
+    }
     public static void printAllLeaf(Node root){
        Queue<Node> q = new LinkedList<>();
         q.add(root);
@@ -318,8 +356,11 @@ public class BinaryTree {
         System.out.println();
         System.out.println("Right View of Binary Tree ");
         bt.rightView(root);
-         System.out.println();
+        System.out.println();
         System.out.println("All Leaf Node ");
         bt.printAllLeaf(root);
+        System.out.println();
+        System.out.println("Bottom View: ");
+        bt.bottomView(root);
     }
 }
