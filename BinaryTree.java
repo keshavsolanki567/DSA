@@ -285,7 +285,44 @@ public class BinaryTree {
                 ps.line=line+1;
                 q.add(ps);
             }
-            mn = Math.min(mx, line);
+            mn = Math.min(mn, line);
+            mx = Math.max(mx, line);
+        }
+        for(int i=mn;i<=mx;i++){
+            System.out.print(hs.get(i)+ " ");
+        }
+    }
+    public static void topView(Node root){
+        Queue<Pair> q = new LinkedList<>();
+        HashMap<Integer,Integer> hs = new HashMap<>();
+        Pair p = new Pair();
+        p.temp=root;
+        p.line=0;
+        q.add(p);
+        int mn=0;
+        int mx=0;
+        while(q.isEmpty()!=true){
+            Pair curr =q.peek();
+            q.poll();
+            Node temp = curr.temp;
+            int line = curr.line;
+            if(!hs.containsKey(line)){
+                hs.put(line, temp.data);
+            }
+            
+            if(temp.left!=null){
+                Pair ps = new Pair();
+                ps.temp=temp.left;
+                ps.line=line-1;
+                q.add(ps);
+            }
+             if(temp.right!=null){
+                Pair ps = new Pair();
+                ps.temp=temp.right;
+                ps.line=line+1;
+                q.add(ps);
+            }
+            mn = Math.min(mn, line);
             mx = Math.max(mx, line);
         }
         for(int i=mn;i<=mx;i++){
@@ -357,10 +394,13 @@ public class BinaryTree {
         System.out.println("Right View of Binary Tree ");
         bt.rightView(root);
         System.out.println();
-        System.out.println("All Leaf Node ");
-        bt.printAllLeaf(root);
-        System.out.println();
         System.out.println("Bottom View: ");
         bt.bottomView(root);
+        System.out.println();
+        System.out.println("Top View ");
+        bt.topView(root);
+        System.out.println();
+        System.out.println("All Leaf Node ");
+        bt.printAllLeaf(root);
     }
 }
