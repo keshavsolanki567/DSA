@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
@@ -214,6 +215,49 @@ public class BinaryTree {
             flag =!flag;
         }
     }
+    public static void verticalOrder(Node root){
+        Queue<Pair> q = new LinkedList<>(); 
+        HashMap<Integer,ArrayList<Integer>> hs = new HashMap<>();
+        Pair p = new Pair();
+        p.temp=root;
+        p.line=0;
+        q.add(p);
+        int mn=0;
+        int mx=0;
+        while(q.isEmpty()!=true){
+            Pair curr =q.peek();
+            q.poll();
+            Node temp = curr.temp;
+            int line = curr.line;
+            if(!hs.containsKey(line)){
+                hs.put(line, new ArrayList<>());
+            }
+            hs.get(line).add(temp.data);
+            if(temp.left!=null){
+                Pair ps = new Pair();
+                ps.temp=temp.left;
+                ps.line=line-1;
+                q.add(ps);
+            }
+             if(temp.right!=null){
+                Pair ps = new Pair();
+                ps.temp=temp.right;
+                ps.line=line+1;
+                q.add(ps);
+            }
+            mn = Math.min(mn, line);
+            mx = Math.max(mx, line);
+        }
+        // for(HashMap.Entry<Integer,ArrayList<Integer>> entry: hs.entrySet()){
+        //     ArrayList<Integer> lst = entry.getValue();
+        //     for(int i=0; i<lst.size(); i++){
+        //         System.out.print(lst.get(i)+"  ");
+        //     }
+        // }
+        for(int i=mn; i<=mx; i++){
+            System.out.print(hs.get(i)+ "  ");
+        }
+    }
     public static void leftView(Node root){
         Queue<Node> q = new LinkedList<>();
         q.add(root);
@@ -387,6 +431,9 @@ public class BinaryTree {
         System.out.println();
         System.out.println("Zigzag levelorder Traversal: ");
         bt.zigzagLevelOrder(root);
+        System.out.println();
+        System.out.println("Vertical Order Traversal: ");
+        bt.verticalOrder(root);
         System.out.println();
         System.out.println("Left View of Binary Tree ");
         bt.leftView(root);
